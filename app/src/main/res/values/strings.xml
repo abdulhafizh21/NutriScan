@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">NutriScan</string>
+    <string name="Welcome_text_2">Yuk cek kandungan karbohidrat dan serat pada buah dan sayur favoritmu</string>
+    <string name="Welcome_text_1">Hidup lebih sehat.</string>
+    <string name="Welcome_text1">Pindai. Ketahui.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="firstname">" "</string>
+    <string name="karbohidrat">Karbohidrat 10 g</string>
+    <string name="serat">Serat 2,3 g</string>
+    <string name="foto_makanan">foto makanan</string>
+    <string name="nama_makanan">Wortel</string>
+</resources>

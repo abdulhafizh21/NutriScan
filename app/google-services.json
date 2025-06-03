@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "85620483006",
+    "project_id": "login-dan-register-8e341",
+    "storage_bucket": "login-dan-register-8e341.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85620483006:android:8f2f2a01c5f9e18ab44fef",
+        "android_client_info": {
+          "package_name": "com.dicoding.nutriscan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuWnuGQAihoQnhwIgPQNwwAlazRoCYYdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

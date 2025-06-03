@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:textColor="@color/hijautua"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profileCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        app:cardBackgroundColor="@color/hijautua"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <LinearLayout
+            android:id="@+id/Lt_Profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/profileImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_account_circle" />
+
+            <LinearLayout
+                android:id="@+id/Lt_namaprofile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Nama : "
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/profile_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:text="Email : "
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/settingsButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:fontFamily="@font/roboto_medium"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_scan"
+        android:drawableStart="@drawable/ic_settings"
+        android:drawableEnd="@drawable/ic_chevron_right"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/profileCard"
+        app:layout_constraintStart_toStartOf="@id/profileCard"
+        app:layout_constraintEnd_toEndOf="@id/profileCard"/>
+
+    <!-- About Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/aboutButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_scan"
+        android:drawableStart="@drawable/ic_about"
+        android:drawableEnd="@drawable/ic_chevron_right"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="About"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@id/profileCard"
+        app:layout_constraintStart_toStartOf="@id/profileCard"
+        app:layout_constraintTop_toBottomOf="@id/settingsButton" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/logout_button"
+        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_scan"
+        android:fontFamily="@font/roboto_medium"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="Logout"
+        android:drawableStart="@drawable/logout_ic"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/profileCard"
+        app:layout_constraintStart_toStartOf="@+id/profileCard"
+        app:layout_constraintTop_toBottomOf="@+id/aboutButton" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

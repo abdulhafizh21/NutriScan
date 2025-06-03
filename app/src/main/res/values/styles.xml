@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Style untuk teks BottomNavigationView -->
+    <style name="CustomBottomNavItemTextStyle">
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/hijautext</item>
+    </style>
+</resources>
+
