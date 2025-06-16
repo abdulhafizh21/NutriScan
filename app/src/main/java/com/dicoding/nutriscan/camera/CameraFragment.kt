@@ -58,7 +58,6 @@ class CameraFragment : Fragment() {
 
         // Menangani klik pada btn_add
         btnAdd.setOnClickListener {
-            // Navigasi ke CameraOpenActivity
             val intent = Intent(activity, CameraOpenActivity::class.java)
             startActivity(intent)
         }

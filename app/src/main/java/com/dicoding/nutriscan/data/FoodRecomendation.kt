@@ -1,8 +1,10 @@
 package com.dicoding.nutriscan.data
 
 data class FoodRecomendation(
-    val name: String,
-    val carbs: String,
-    val fiber: String,
-    val imageResId: Int
-)
+    val nama: String = "",
+    val karbohidrat: Double = 0.0,
+    val serat: Double = 0.0,
+    val gambarUrl: String = ""
+) {
+    constructor() : this("", 0.0, 0.0, "")
+}

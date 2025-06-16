@@ -15,22 +15,20 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <!-- Image -->
         <ImageView
             android:scaleType="centerCrop"
             android:id="@+id/articleImage"
             android:layout_width="65dp"
             android:layout_height="87dp"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/timun"
+            android:background="@drawable/article_image"
+
         />
-        <!-- Text -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Title of the article -->
             <TextView
                 android:id="@+id/articleTitle"
                 android:layout_width="wrap_content"
@@ -38,19 +36,23 @@
                 android:text="@string/nama_makanan"
                 android:fontFamily="@font/roboto_bold"
                 android:textColor="@color/hijautua"
-                android:textSize="24sp"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
-            <!-- Short Description -->
             <TextView
                 android:id="@+id/articleDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:text="Wortel memiliki warna oranye cerah yang dikenal dengan rasa manis alami."
                 android:fontFamily="@font/roboto"
                 android:textSize="16sp"
                 android:textColor="@color/hijautua" />
 
         </LinearLayout>
+
     </LinearLayout>
+
+
 </androidx.cardview.widget.CardView>

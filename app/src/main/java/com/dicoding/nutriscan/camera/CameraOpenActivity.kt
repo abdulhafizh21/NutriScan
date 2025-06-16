@@ -68,7 +68,8 @@ class CameraOpenActivity : AppCompatActivity() {
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
         objectDetector = ObjectDetector(this, "model_densenet.tflite")
-        database = FirebaseDatabase.getInstance().getReference("plants")
+        val firebase = FirebaseDatabase.getInstance("https://login-dan-register-8e341-default-rtdb.asia-southeast1.firebasedatabase.app/")
+        database = firebase.getReference("plants")
 
         binding.captureButton.setOnClickListener {
             takePhoto()
@@ -222,8 +223,10 @@ class CameraOpenActivity : AppCompatActivity() {
     }
 
     private fun setUpDataByLabel(labelRef: DatabaseReference, bottomSheetDialog: BottomSheetDialog) {
+
         labelRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+
                 val kategori = snapshot.child("kategori").getValue(String::class.java)
                 val tvKategori = bottomSheetDialog.findViewById<TextView>(R.id.tv_kelas)
                 tvKategori?.text = kategori
@@ -252,6 +255,7 @@ class CameraOpenActivity : AppCompatActivity() {
                 val deskripsi = snapshot.child("deskripsi").getValue(String::class.java)
                 val tvDeskripsi = bottomSheetDialog.findViewById<TextView>(R.id.tv_keterangan)
                 tvDeskripsi?.text = deskripsi ?: "Deskripsi tidak tersedia"
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -268,7 +272,7 @@ class CameraOpenActivity : AppCompatActivity() {
         val formattedProbability = String.format("%.1f", probability * 100)
         if (probability >= 0.8) {
             tvAkurasi?.text = "Kecocokan : $formattedProbability%"
-            tvAkurasi?.setTextColor(ContextCompat.getColor(this, R.color.hijaumuda))
+            tvAkurasi?.setTextColor(ContextCompat.getColor(this, R.color.white))
             tvAkurasi?.setTextSize(18f)
         } else if (probability >= 0.7 && probability < 0.8) {
             tvAkurasi?.text = "Kecocokan : $formattedProbability%"
@@ -279,7 +283,7 @@ class CameraOpenActivity : AppCompatActivity() {
 
     private fun AdjustTextKategori(tvKategori: TextView?, kategori: String?) {
         if (kategori == "Tinggi Serat" || kategori == "Tinggi Karbohidrat" || kategori == "Tinggi Karbohidrat dan Serat") {
-            tvKategori?.setTextColor(ContextCompat.getColor(this, R.color.hijaumuda))
+            tvKategori?.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         } else {
             tvKategori?.setTextColor(ContextCompat.getColor(this, R.color.merah))
