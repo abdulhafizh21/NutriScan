@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,13 +18,13 @@ import com.dicoding.nutriscan.data.Article
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-
-
 class FavoriteFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: FavoriteAdapter
     private lateinit var database: DatabaseReference
+    private lateinit var progressBar: ProgressBar
+    private lateinit var emptyTextView: TextView  // Menambahkan referensi untuk TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +34,9 @@ class FavoriteFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.rv_favorite)
         recyclerView.layoutManager = LinearLayoutManager(activity)
+
+        progressBar = view.findViewById(R.id.progressBar) // Menyambungkan ProgressBar dengan layout XML
+        emptyTextView = view.findViewById(R.id.c_txt1) // Menyambungkan TextView "No history yet" dengan layout XML
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId != null) {
@@ -45,6 +50,9 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun fetchFavorites() {
+        // Menampilkan ProgressBar saat data sedang dimuat
+        progressBar.visibility = View.VISIBLE
+
         // Mendapatkan data dari Firebase
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -53,13 +61,29 @@ class FavoriteFragment : Fragment() {
                     val article = favoriteSnapshot.getValue(Article::class.java)
                     article?.let { favoritesList.add(it) }
                 }
-                // Set data ke adapter RecyclerView
-                adapter = FavoriteAdapter(favoritesList)
-                recyclerView.adapter = adapter
+
+                // Cek apakah data favorit kosong
+                if (favoritesList.isEmpty()) {
+                    // Menampilkan pesan jika tidak ada data favorit
+                    emptyTextView.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                } else {
+                    // Menyembunyikan pesan "No history yet" dan menampilkan RecyclerView jika ada data
+                    emptyTextView.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+
+                    // Set data ke adapter RecyclerView
+                    adapter = FavoriteAdapter(favoritesList)
+                    recyclerView.adapter = adapter
+                }
+
+                // Sembunyikan ProgressBar setelah data selesai dimuat
+                progressBar.visibility = View.GONE
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(activity, "Error fetching data", Toast.LENGTH_SHORT).show()
+                progressBar.visibility = View.GONE
             }
         })
     }

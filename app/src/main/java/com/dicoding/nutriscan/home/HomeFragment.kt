@@ -28,15 +28,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentHomeBinding.bind(view)
         binding.progressBar.visibility = View.VISIBLE
-
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance("https://login-dan-register-8e341-default-rtdb.asia-southeast1.firebasedatabase.app/")
-        // Mengambil data pengguna yang sedang login
+
         val userId = auth.currentUser?.uid
         if (userId != null) {
             val userRef = database.getReference("users").child(userId)
@@ -48,11 +48,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 binding.tvNewsName.text = "$username"
                 binding.progressBar.visibility = View.GONE
             }.addOnFailureListener {
-                Toast.makeText(
-                    requireContext(),
-                    "Gagal mengambil data pengguna",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(requireContext(), "Gagal mengambil data pengguna", Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.GONE
             }
         }
 
@@ -73,12 +70,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.scanBtn.setOnClickListener {
             val intent = Intent(activity, CameraOpenActivity::class.java)
             startActivity(intent)
-
         }
     }
 
     private fun fetchArticlesFromFirebase() {
         val articlesRef = database.getReference("articles")
+
+        binding.progressBar.visibility = View.VISIBLE
 
         articlesRef.get().addOnSuccessListener { dataSnapshot ->
             val articles = mutableListOf<Article>()
@@ -101,6 +99,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun getRecommendations() {
         val recommendationsRef = database.getReference("rekomendasi")
+        binding.progressBar.visibility = View.VISIBLE
 
         recommendationsRef.get().addOnSuccessListener { dataSnapshot ->
             val foodRecommendations = mutableListOf<FoodRecomendation>()

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,13 +19,13 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-
 class ArticleFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ArticleAdapter
     private lateinit var searchView: SearchView
     private lateinit var database: DatabaseReference
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +35,12 @@ class ArticleFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.rv_article)
         searchView = view.findViewById(R.id.searchBar)
+        progressBar = view.findViewById(R.id.progressBar)
+
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
-        database = FirebaseDatabase.getInstance("https://login-dan-register-8e341-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("articles")
+        database = FirebaseDatabase.getInstance("https://login-dan-register-8e341-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("articles")
 
         fetchArticles()
 
@@ -60,6 +64,8 @@ class ArticleFragment : Fragment() {
     }
 
     private fun fetchArticles() {
+        progressBar.visibility = View.VISIBLE
+
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val articles = mutableListOf<Article>()
@@ -67,17 +73,23 @@ class ArticleFragment : Fragment() {
                     val article = articleSnapshot.getValue(Article::class.java)
                     article?.let { articles.add(it) }
                 }
+
                 adapter = ArticleAdapter(articles)
                 recyclerView.adapter = adapter
+
+                progressBar.visibility = View.GONE
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(activity, "Error fetching data", Toast.LENGTH_SHORT).show()
+                progressBar.visibility = View.GONE
             }
         })
     }
 
     private fun searchArticles(query: String) {
+        progressBar.visibility = View.VISIBLE
+
         database.orderByChild("title").startAt(query).endAt(query + "\uf8ff")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -86,12 +98,16 @@ class ArticleFragment : Fragment() {
                         val article = articleSnapshot.getValue(Article::class.java)
                         article?.let { articles.add(it) }
                     }
+
                     adapter = ArticleAdapter(articles)
                     recyclerView.adapter = adapter
+
+                    progressBar.visibility = View.GONE
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     Toast.makeText(activity, "Error fetching data", Toast.LENGTH_SHORT).show()
+                    progressBar.visibility = View.GONE
                 }
             })
     }

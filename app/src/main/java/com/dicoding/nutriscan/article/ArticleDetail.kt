@@ -34,13 +34,11 @@ class ArticleDetail : AppCompatActivity() {
 
         articleTitle = intent.getStringExtra("articleTitle")
 
-        // Button untuk kembali ke halaman sebelumnya
         val btnBackDetail = findViewById<androidx.appcompat.widget.AppCompatButton>(R.id.btn_back_detail)
         btnBackDetail.setOnClickListener {
             onBackPressed()
         }
 
-        // Tombol "Add to Favorites"
         btnFavorite.setOnClickListener {
             articleTitle?.let { title -> toggleFavorite(title) }
         }
@@ -64,7 +62,6 @@ class ArticleDetail : AppCompatActivity() {
                     articleDescription.text = article.description
                     Picasso.get().load(article.imageUrl).into(articleImage)
 
-                    // Cek apakah artikel sudah ada di favorit
                     checkIfFavorite(articleTitle)
                 } else {
                     Toast.makeText(this@ArticleDetail, "Article not found", Toast.LENGTH_SHORT).show()
@@ -86,10 +83,8 @@ class ArticleDetail : AppCompatActivity() {
             // Cek apakah artikel ada di favorit
             favoritesRef.child(articleTitle).get().addOnSuccessListener {
                 if (it.exists()) {
-                    // Jika artikel sudah ada di favorit, ubah warna tombol
                     btnFavorite.setColorFilter(resources.getColor(R.color.hijautua), PorterDuff.Mode.SRC_IN) // Warna oranye
                 } else {
-                    // Jika artikel belum ada di favorit, set warna tombol default (misalnya abu-abu)
                     btnFavorite.setColorFilter(resources.getColor(R.color.grey), PorterDuff.Mode.SRC_IN) // Warna abu-abu
                 }
             }
@@ -123,7 +118,6 @@ class ArticleDetail : AppCompatActivity() {
             val favoritesRef = FirebaseDatabase.getInstance("https://login-dan-register-8e341-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("users").child(userId).child("favorites")
 
-            // Ambil detail artikel dari Firebase untuk menyimpan ke favorit
             database.orderByChild("title").equalTo(articleTitle).addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val article = snapshot.children.firstOrNull()?.getValue(Article::class.java)
@@ -134,14 +128,12 @@ class ArticleDetail : AppCompatActivity() {
                             "description" to article.description
                         )
 
-                        // Menyimpan data artikel ke dalam Firebase favorites
                         favoritesRef.child(articleTitle).setValue(articleData).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                // Mengubah warna tombol setelah ditambahkan ke favorit
                                 btnFavorite.setColorFilter(resources.getColor(R.color.hijautua), PorterDuff.Mode.SRC_IN)  // Warna berubah menjadi oranye
-                                Toast.makeText(this@ArticleDetail, "Added to favorites", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@ArticleDetail, "Telah di tambahkan ke Favorite", Toast.LENGTH_SHORT).show()
                             } else {
-                                Toast.makeText(this@ArticleDetail, "Failed to add to favorites", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@ArticleDetail, "Gagal menambahkan ke favorites", Toast.LENGTH_SHORT).show()
                             }
                         }
                     } else {
@@ -162,12 +154,10 @@ class ArticleDetail : AppCompatActivity() {
             val favoritesRef = FirebaseDatabase.getInstance("https://login-dan-register-8e341-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("users").child(userId).child("favorites")
 
-            // Menghapus artikel dari favorit
             favoritesRef.child(articleTitle).removeValue().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // Mengubah warna tombol setelah dihapus dari favorit
                     btnFavorite.setColorFilter(resources.getColor(R.color.grey), PorterDuff.Mode.SRC_IN)  // Warna kembali menjadi abu-abu
-                    Toast.makeText(this@ArticleDetail, "Removed from favorites", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ArticleDetail, "Article di hapus dari favorites", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this@ArticleDetail, "Failed to remove from favorites", Toast.LENGTH_SHORT).show()
                 }

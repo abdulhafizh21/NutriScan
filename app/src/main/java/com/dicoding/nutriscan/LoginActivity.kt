@@ -79,11 +79,9 @@ class LoginActivity : AppCompatActivity() {
                 binding.LBtn1.isEnabled = true
 
                 if (task.isSuccessful) {
-                    // Mendapatkan UID pengguna yang login
                     val userId = auth.currentUser?.uid
 
                     if (userId != null) {
-                        // Mengambil username dari Firebase Realtime Database
                         val userRef = FirebaseDatabase.getInstance("https://login-dan-register-8e341-default-rtdb.asia-southeast1.firebasedatabase.app/")
                             .getReference("users").child(userId)
                         userRef.get().addOnSuccessListener { dataSnapshot ->
@@ -106,7 +104,7 @@ class LoginActivity : AppCompatActivity() {
         auth.sendPasswordResetEmail(email)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Email reset password telah dikirim.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Email reset password telah dikirim. Cek email anda", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this, "Gagal mengirim email reset password: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
