@@ -52,6 +52,24 @@ class LoginActivity : AppCompatActivity() {
 
             LoginFirebase(email, password)
         }
+
+        // Fitur Lupa Kata Sandi
+        binding.LForgotPassword.setOnClickListener {
+            val email = binding.edtEmail.text.toString()
+
+            if (email.isEmpty()) {
+                binding.edtEmail.error = "Email harus diisi!"
+                binding.edtEmail.requestFocus()
+                return@setOnClickListener
+            }
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                binding.edtEmail.error = "Email tidak valid"
+                binding.edtEmail.requestFocus()
+                return@setOnClickListener
+            }
+
+            resetPassword(email)
+        }
     }
 
     private fun LoginFirebase(email: String, password: String) {
@@ -80,6 +98,17 @@ class LoginActivity : AppCompatActivity() {
                     }
                 } else {
                     Toast.makeText(this, "${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    private fun resetPassword(email: String) {
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Email reset password telah dikirim.", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Gagal mengirim email reset password: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
     }
