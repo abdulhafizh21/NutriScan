@@ -84,7 +84,7 @@ class RegisterActivity : AppCompatActivity() {
                     val userId = auth.currentUser?.uid
 
                     // Membuat objek user untuk disimpan ke Firebase Realtime Database
-                    val user = User(name, email)
+                    val user = User(name, email, favorites = emptyMap())
 
                     // Menyimpan data pengguna ke Firebase Database
                     if (userId != null) {

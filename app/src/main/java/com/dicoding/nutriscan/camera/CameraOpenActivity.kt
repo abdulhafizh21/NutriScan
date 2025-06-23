@@ -27,6 +27,7 @@ import com.dicoding.nutriscan.R
 import com.dicoding.nutriscan.databinding.ActivityCameraOpenBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -58,6 +59,10 @@ class CameraOpenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraOpenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        // Menambahkan fungsi untuk tombol cancel
+        binding.btnCancel.setOnClickListener {
+            onCancelPressed()
+        }
 
         if (allPermissionsGranted()) {
             startCamera()
@@ -150,12 +155,64 @@ class CameraOpenActivity : AppCompatActivity() {
 
                 if (detectionResult.second >= 0.7) {
                     showBottomSheet(savedUri, detectionResult)
+
+                    // Menyimpan hasil klasifikasi ke Firebase
+                    saveToFirebase(savedUri, detectionResult)
                 } else {
                     showErrorAkurasiDialog()
                 }
             }
         })
     }
+
+    private fun saveToFirebase(imageUri: Uri, detectionResult: Pair<String, Float>) {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            val userId = user.uid
+            val plantName = detectionResult.first
+            val plantRef = FirebaseDatabase.getInstance("https://login-dan-register-8e341-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("plants").child(plantName)
+
+            // Ambil data dari Firebase berdasarkan nama objek
+            plantRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val karbo = snapshot.child("karbo").getValue(Double::class.java) ?: 0.0
+                    val serat = snapshot.child("serat").getValue(Double::class.java) ?: 0.0
+                    val deskripsi = snapshot.child("deskripsi").getValue(String::class.java) ?: "Deskripsi tidak tersedia"
+                    val kategori = snapshot.child("kategori").getValue(String::class.java) ?: "Tidak Diketahui"
+
+                    val result = hashMapOf(
+                        "nama" to plantName,
+                        "imageUri" to imageUri.toString(),
+                        "akurasi" to detectionResult.second, // Menyimpan nilai akurasi
+                        "karbo" to karbo,
+                        "serat" to serat,
+                        "kategori" to kategori,
+                        "deskripsi" to deskripsi
+                    )
+
+                    // Menyimpan data ke Firebase berdasarkan UID pengguna
+                    val historyRef = FirebaseDatabase.getInstance("https://login-dan-register-8e341-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users").child(userId).child("history").child(plantName)
+                    historyRef.setValue(result).addOnSuccessListener {
+                        Log.d(TAG, "Hasil berhasil disimpan ke Firebase untuk pengguna dengan UID: $userId")
+                    }.addOnFailureListener { e ->
+                        Log.e(TAG, "Error saat menyimpan hasil ke Firebase: ${e.message}", e)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e(TAG, "Error saat mengambil data tanaman dari Firebase: ${error.message}")
+                }
+            })
+        } else {
+            Log.e(TAG, "Pengguna belum login.")
+        }
+    }
+
+    private fun onCancelPressed() {
+        // Fungsi untuk handle cancel action
+        finish()  // Menutup activity dan kembali ke activity sebelumnya
+    }
+
 
     private fun showLoadingDialog() {
         val builder = AlertDialog.Builder(this)
@@ -223,10 +280,8 @@ class CameraOpenActivity : AppCompatActivity() {
     }
 
     private fun setUpDataByLabel(labelRef: DatabaseReference, bottomSheetDialog: BottomSheetDialog) {
-
         labelRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 val kategori = snapshot.child("kategori").getValue(String::class.java)
                 val tvKategori = bottomSheetDialog.findViewById<TextView>(R.id.tv_kelas)
                 tvKategori?.text = kategori
@@ -255,7 +310,6 @@ class CameraOpenActivity : AppCompatActivity() {
                 val deskripsi = snapshot.child("deskripsi").getValue(String::class.java)
                 val tvDeskripsi = bottomSheetDialog.findViewById<TextView>(R.id.tv_keterangan)
                 tvDeskripsi?.text = deskripsi ?: "Deskripsi tidak tersedia"
-
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -284,10 +338,8 @@ class CameraOpenActivity : AppCompatActivity() {
     private fun AdjustTextKategori(tvKategori: TextView?, kategori: String?) {
         if (kategori == "Tinggi Serat" || kategori == "Tinggi Karbohidrat" || kategori == "Tinggi Karbohidrat dan Serat") {
             tvKategori?.setTextColor(ContextCompat.getColor(this, R.color.white))
-
         } else {
             tvKategori?.setTextColor(ContextCompat.getColor(this, R.color.merah))
-
         }
     }
 
