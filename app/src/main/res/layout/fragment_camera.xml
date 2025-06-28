@@ -48,9 +48,15 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/historyRecyclerView"
+        app:layout_constraintBottom_toTopOf="@id/historyScrollView"
         android:layout_centerInParent="true"/>
-
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/historyScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:fillViewport="true">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/historyRecyclerView"
             android:layout_width="match_parent"
@@ -60,6 +66,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+    </androidx.core.widget.NestedScrollView>
     <ImageView
         android:id="@+id/c_camera"
         android:layout_width="wrap_content"

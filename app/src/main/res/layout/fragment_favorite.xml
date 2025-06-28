@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".favorite.FavoriteFragment">
 
@@ -28,7 +29,12 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true" />
     </androidx.appcompat.widget.Toolbar>
-
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:fillViewport="true">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_favorite"
         android:layout_width="match_parent"
@@ -38,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
-
+    </androidx.core.widget.NestedScrollView>
     <TextView
         android:id="@+id/c_txt1"
         android:layout_width="wrap_content"

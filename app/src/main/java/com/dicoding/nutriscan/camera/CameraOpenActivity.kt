@@ -59,6 +59,7 @@ class CameraOpenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraOpenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         // Menambahkan fungsi untuk tombol cancel
         binding.btnCancel.setOnClickListener {
             onCancelPressed()
@@ -212,7 +213,6 @@ class CameraOpenActivity : AppCompatActivity() {
         // Fungsi untuk handle cancel action
         finish()  // Menutup activity dan kembali ke activity sebelumnya
     }
-
 
     private fun showLoadingDialog() {
         val builder = AlertDialog.Builder(this)

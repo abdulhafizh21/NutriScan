@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature android:name="android.hardware.camera.any" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -17,9 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NutriScan"
         tools:targetApi="31">
-        <activity
-            android:name=".favorite.FavoriteDetailActivity"
-            android:exported="false" />
+
         <activity
             android:name=".camera.HistoryDetailActivity"
             android:exported="false" />

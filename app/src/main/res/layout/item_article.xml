@@ -18,7 +18,7 @@
         <ImageView
             android:scaleType="centerCrop"
             android:id="@+id/articleImage"
-            android:layout_width="65dp"
+            android:layout_width="70dp"
             android:layout_height="87dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/article_image"
@@ -36,7 +36,7 @@
                 android:text="@string/nama_makanan"
                 android:fontFamily="@font/roboto_bold"
                 android:textColor="@color/hijautua"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -47,7 +47,7 @@
                 android:ellipsize="end"
                 android:text="Wortel memiliki warna oranye cerah yang dikenal dengan rasa manis alami."
                 android:fontFamily="@font/roboto"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="@color/hijautua" />
             <LinearLayout
                 android:layout_marginTop="10dp"

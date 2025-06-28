@@ -74,6 +74,7 @@
             android:layout_marginStart="16dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:background="@color/white"
             android:id="@+id/rv_recomendation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

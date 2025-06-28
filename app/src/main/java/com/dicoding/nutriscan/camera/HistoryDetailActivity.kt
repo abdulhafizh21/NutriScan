@@ -54,7 +54,7 @@ class HistoryDetailActivity : AppCompatActivity() {
         }
         binding.tvSerat.text = "Serat:"
         binding.btnBack.setOnClickListener {
-            onBackPressed() // Menutup activity ini dan kembali ke activity sebelumnya
+            onBackPressed()
         }
     }
 

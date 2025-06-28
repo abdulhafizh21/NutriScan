@@ -76,12 +76,12 @@
             android:id="@+id/L_forgotPassword"
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Lupa Kata Sandi?"
             android:textColor="@color/merah"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 

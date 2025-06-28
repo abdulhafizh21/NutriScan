@@ -48,14 +48,41 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="16dp">
-
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circleprofile"
+               >
             <ImageView
                 android:id="@+id/profileImage"
-                android:layout_width="70dp"
+                android:layout_width="wrap_content"
+                android:scaleType="centerCrop"
                 android:layout_height="70dp"
+
                 android:layout_gravity="center_horizontal"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_account_circle" />
+                android:src="@drawable/ic_account_circle"
+                android:layout_centerInParent="true"
+                android:clickable="true"
+                android:background="@drawable/circleprofile"
+                android:onClick="onChangeProfileImage" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_edit_24"
+                   android:layout_alignBottom="@id/profileImage"
+                    android:layout_marginLeft="60dp"/>
+            </RelativeLayout>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:indeterminateTint="@color/hijautua"
+                app:layout_constraintTop_toBottomOf="@id/profileImage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_centerInParent="true"/>
 
             <LinearLayout
                 android:id="@+id/Lt_namaprofile"
@@ -128,6 +155,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_scan"
+        android:drawableEnd="@drawable/ic_hijautua_kanan"
         android:fontFamily="@font/roboto_medium"
         android:textSize="16sp"
         android:gravity="center"
