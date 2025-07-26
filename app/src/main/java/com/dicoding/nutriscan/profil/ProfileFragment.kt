@@ -20,6 +20,7 @@ import android.util.Log
 import com.dicoding.nutriscan.LoginActivity
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import com.dicoding.nutriscan.About.AboutActivity
 import com.dicoding.nutriscan.R
 import com.google.firebase.storage.StorageException
 
@@ -31,7 +32,6 @@ class ProfileFragment : Fragment() {
     private lateinit var storage: FirebaseStorage
     private lateinit var storageReference: StorageReference
 
-    // Activity Result for choosing image from gallery
     private val pickImageForProfile =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
@@ -51,7 +51,6 @@ class ProfileFragment : Fragment() {
         storage = FirebaseStorage.getInstance()
         storageReference = storage.reference
 
-        // Mengambil data pengguna yang sedang login
         val userId = auth.currentUser?.uid
         if (userId != null) {
             val userRef = database.getReference("users").child(userId)
@@ -61,7 +60,6 @@ class ProfileFragment : Fragment() {
                 val profileImageUrl =
                     dataSnapshot.child("profileImageUrl").getValue(String::class.java)
 
-                // Menampilkan nama dan email di UI
                 binding.profileName.text = "$username"
                 binding.profileEmail.text = "$email"
                 if (profileImageUrl != null) {
@@ -101,13 +99,11 @@ class ProfileFragment : Fragment() {
 
         // Tombol About
         binding.aboutButton.setOnClickListener {
-            // Aksi untuk tombol About
-            Toast.makeText(requireContext(), "About clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), AboutActivity::class.java)
+            startActivity(intent)
         }
 
-        // Menangani klik untuk mengubah gambar profil
         binding.profileImage.setOnClickListener {
-            // Membuka galeri untuk memilih gambar baru
             pickImageForProfile.launch("image/*")
         }
 

@@ -1,8 +1,6 @@
 package com.dicoding.nutriscan.adapter
 
 import android.content.Context
-import android.content.Intent
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +12,8 @@ import com.dicoding.nutriscan.databinding.ItemHistoryBinding
 class HistoryAdapter(
     private val context: Context,
     private val historyList: List<HistoryItem>,
-    private val onItemClick: (HistoryItem) -> Unit
+    private val onItemClick: (HistoryItem) -> Unit,
+    private val onDeleteClick: (HistoryItem) -> Unit
 ) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -38,9 +37,14 @@ class HistoryAdapter(
             // Mengatur gambar dengan Glide
             Glide.with(context).load(historyItem.imageUri).into(binding.articleImage)
 
-            // Mengatur klik listener
+            // Mengatur klik listener untuk detail
             itemView.setOnClickListener {
                 onItemClick(historyItem) // Memanggil lambda ketika item di klik
+            }
+
+            // Mengatur klik listener untuk tombol hapus
+            binding.hapusHistory.setOnClickListener {
+                onDeleteClick(historyItem) // Memanggil fungsi hapus saat tombol ditekan
             }
         }
     }

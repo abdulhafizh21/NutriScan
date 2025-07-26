@@ -14,10 +14,7 @@ import com.dicoding.nutriscan.adapter.HistoryAdapter
 import com.dicoding.nutriscan.data.HistoryItem
 import com.dicoding.nutriscan.databinding.FragmentCameraBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 
 class CameraFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
@@ -34,9 +31,11 @@ class CameraFragment : Fragment() {
 
         recyclerView = binding.historyRecyclerView
         historyList = mutableListOf()
-        historyAdapter = HistoryAdapter(requireContext(), historyList) { historyItem ->
+        historyAdapter = HistoryAdapter(requireContext(), historyList, { historyItem ->
             openDetailActivity(historyItem)
-        }
+        }, { historyItem ->
+            deleteHistoryItem(historyItem)
+        })
 
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = historyAdapter
@@ -96,7 +95,6 @@ class CameraFragment : Fragment() {
 
                     historyAdapter.notifyDataSetChanged()
 
-
                     checkRecyclerViewData()
                 }
 
@@ -118,6 +116,30 @@ class CameraFragment : Fragment() {
             binding.cTxt1.visibility = View.GONE
             binding.cTxt2.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun deleteHistoryItem(historyItem: HistoryItem) {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            val userId = user.uid
+            val historyRef = FirebaseDatabase.getInstance("https://login-dan-register-8e341-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("users").child(userId).child("history")
+
+            // Menghapus item history berdasarkan nama atau ID
+            historyRef.orderByChild("nama").equalTo(historyItem.name).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        for (historyData in snapshot.children) {
+                            historyData.ref.removeValue() // Hapus data dari Firebase
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Tangani error jika ada masalah
+                }
+            })
         }
     }
 }
