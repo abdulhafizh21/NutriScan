@@ -17,7 +17,6 @@ import androidx.appcompat.widget.AppCompatButton
 class AboutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_about)
 
         val backButton: AppCompatButton = findViewById(R.id.btn_back)

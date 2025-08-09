@@ -114,22 +114,22 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/settingsButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Settings"
-        android:fontFamily="@font/roboto_medium"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/button_scan"
-        android:drawableStart="@drawable/ic_settings"
-        android:drawableEnd="@drawable/ic_chevron_right"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/profileCard"
-        app:layout_constraintStart_toStartOf="@id/profileCard"
-        app:layout_constraintEnd_toEndOf="@id/profileCard"/>
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/settingsButton"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Settings"-->
+<!--        android:fontFamily="@font/roboto_medium"-->
+<!--        android:textColor="#FFFFFF"-->
+<!--        android:background="@drawable/button_scan"-->
+<!--        android:drawableStart="@drawable/ic_settings"-->
+<!--        android:drawableEnd="@drawable/ic_chevron_right"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:gravity="center"-->
+<!--        android:textSize="16sp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/profileCard"-->
+<!--        app:layout_constraintStart_toStartOf="@id/profileCard"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/profileCard"/>-->
 
     <!-- About Button -->
     <androidx.appcompat.widget.AppCompatButton
@@ -147,7 +147,7 @@
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="@id/profileCard"
         app:layout_constraintStart_toStartOf="@id/profileCard"
-        app:layout_constraintTop_toBottomOf="@id/settingsButton" />
+        app:layout_constraintTop_toBottomOf="@id/profileCard" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/logout_button"

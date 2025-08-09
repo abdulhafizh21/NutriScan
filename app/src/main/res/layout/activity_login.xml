@@ -32,7 +32,7 @@
         android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Masuk ke akun NutriScan anda"
+        android:text="Masuk ke akun CF Scan anda"
         android:layout_below="@id/L_txt1"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/roboto_medium"

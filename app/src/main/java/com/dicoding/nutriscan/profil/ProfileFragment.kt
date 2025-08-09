@@ -75,10 +75,8 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        // Set up Toolbar
         val toolbar: Toolbar = binding.root.findViewById(R.id.toolbar)
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        // Sembunyikan judul default
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
         val toolbarTitle: TextView = binding.root.findViewById(R.id.toolbar_title)
         toolbarTitle.text = "Profile"
@@ -91,13 +89,12 @@ class ProfileFragment : Fragment() {
             requireActivity().finish()
         }
 
-        // Tombol Settings
-        binding.settingsButton.setOnClickListener {
-            // Aksi untuk tombol Settings
-            Toast.makeText(requireContext(), "Settings clicked", Toast.LENGTH_SHORT).show()
-        }
+//        // Tombol Settings
+//        binding.settingsButton.setOnClickListener {
+//            // Aksi untuk tombol Settings
+//            Toast.makeText(requireContext(), "Settings clicked", Toast.LENGTH_SHORT).show()
+//        }
 
-        // Tombol About
         binding.aboutButton.setOnClickListener {
             val intent = Intent(requireContext(), AboutActivity::class.java)
             startActivity(intent)
