@@ -63,7 +63,6 @@ class ProfileFragment : Fragment() {
                 binding.profileName.text = "$username"
                 binding.profileEmail.text = "$email"
                 if (profileImageUrl != null) {
-                    // Memuat gambar profil jika URL tersedia
                     Glide.with(requireContext()).load(profileImageUrl).into(binding.profileImage)
                 }
             }.addOnFailureListener {
@@ -81,7 +80,6 @@ class ProfileFragment : Fragment() {
         val toolbarTitle: TextView = binding.root.findViewById(R.id.toolbar_title)
         toolbarTitle.text = "Profile"
 
-        // Tombol Logout
         binding.logoutButton.setOnClickListener {
             auth.signOut()
             val intent = Intent(requireContext(), LoginActivity::class.java)
@@ -108,10 +106,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun uploadProfileImageToFirebase(imageUri: Uri) {
-        // Menampilkan ProgressBar saat gambar diunggah
         binding.progressBar.visibility = View.VISIBLE
 
-        // Menyimpan gambar ke Firebase Storage
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         val profileImageRef = FirebaseStorage.getInstance("gs://login-dan-register-8e341.firebasestorage.app")
             .reference
@@ -119,15 +115,11 @@ class ProfileFragment : Fragment() {
 
         profileImageRef.putFile(imageUri)
             .addOnSuccessListener {
-                // Mendapatkan URL gambar setelah upload selesai
                 profileImageRef.downloadUrl.addOnSuccessListener { uri ->
-                    val profileImageUrl = uri.toString() // Mendapatkan URL gambar
-
-                    // Memperbarui URL gambar profil di Firebase Realtime Database
+                    val profileImageUrl = uri.toString()
                     val userRef = FirebaseDatabase.getInstance("https://login-dan-register-8e341-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users").child(userId!!)
                     userRef.child("profileImageUrl").setValue(profileImageUrl)
                         .addOnSuccessListener {
-                            // Gambar berhasil diperbarui, tampilkan gambar
                             Glide.with(requireContext()).load(profileImageUrl)
                                 .into(binding.profileImage)
                             binding.progressBar.visibility = View.GONE
@@ -149,7 +141,6 @@ class ProfileFragment : Fragment() {
                 }
             }
             .addOnFailureListener { exception ->
-                // Jika upload gagal, tampilkan error
                 Log.e("ProfileFragment", "Failed to upload image: ${exception.message}", exception)
                 Toast.makeText(
                     requireContext(),

@@ -137,7 +137,6 @@ class CameraFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    // Tangani error jika ada masalah
                 }
             })
         }

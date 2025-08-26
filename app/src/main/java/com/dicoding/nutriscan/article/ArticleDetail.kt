@@ -80,7 +80,6 @@ class ArticleDetail : AppCompatActivity() {
             val favoritesRef = FirebaseDatabase.getInstance("https://login-dan-register-8e341-default-rtdb.asia-southeast1.firebasedatabase.app/")
                 .getReference("users").child(userId).child("favorites")
 
-            // Cek apakah artikel ada di favorit
             favoritesRef.child(articleTitle).get().addOnSuccessListener {
                 if (it.exists()) {
                     btnFavorite.setColorFilter(resources.getColor(R.color.hijautua), PorterDuff.Mode.SRC_IN) // Warna oranye

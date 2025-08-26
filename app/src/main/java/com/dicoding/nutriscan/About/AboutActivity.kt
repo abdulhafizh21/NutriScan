@@ -31,20 +31,16 @@ class AboutActivity : AppCompatActivity() {
             "Semangka", "Singkong", "Terung", "Tomat", "Ubi Ungu", "Wortel"
         )
 
-        // GridLayout to display the plants in two columns
         val gridLayout: GridLayout = findViewById(R.id.gridLayout)
 
-        // Loop through the plants list and add them to the GridLayout
         for (plant in plants) {
-            // Create a new TextView for each plant
             val textView = TextView(this)
-            textView.text = "• $plant"  // Add bullet point before the plant name
+            textView.text = "• $plant"
             textView.textSize = 16f
             textView.fontFeatureSettings = "font-family=Roboto-Medium"
-            textView.setTextColor(resources.getColor(R.color.white)) // Or set the color you want
-            textView.setPadding(8, 8, 8, 8) // Padding for spacing
+            textView.setTextColor(resources.getColor(R.color.white))
+            textView.setPadding(8, 8, 8, 8)
 
-            // Add each TextView dynamically to the GridLayout
             gridLayout.addView(textView)
         }
     }

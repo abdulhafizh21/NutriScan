@@ -29,7 +29,7 @@ class FavoriteAdapter(private val favoriteList: List<Article>) : RecyclerView.Ad
 
         holder.itemView.setOnClickListener {
             val intent = Intent(it.context, ArticleDetail::class.java)
-            intent.putExtra("articleTitle", article.title) // Mengirim title artikel ke ArticleDetail
+            intent.putExtra("articleTitle", article.title)
             it.context.startActivity(intent)
         }
     }

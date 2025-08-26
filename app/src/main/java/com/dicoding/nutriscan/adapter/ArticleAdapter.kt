@@ -28,7 +28,6 @@ class ArticleAdapter(private val articles: List<Article>) :
 
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
-            // Pindah ke detail artikel saat artikel diklik
             val intent = Intent(context, ArticleDetail::class.java)
             intent.putExtra("articleTitle", article.title)
             context.startActivity(intent)

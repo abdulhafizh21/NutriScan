@@ -44,7 +44,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 val username = dataSnapshot.child("name").getValue(String::class.java)
                 val email = auth.currentUser?.email
 
-                // Menampilkan nama dan email di UI
                 binding.tvNewsName.text = "$username"
                 binding.progressBar.visibility = View.GONE
             }.addOnFailureListener {

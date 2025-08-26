@@ -60,7 +60,6 @@ class CameraOpenActivity : AppCompatActivity() {
         binding = ActivityCameraOpenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Menambahkan fungsi untuk tombol cancel
         binding.btnCancel.setOnClickListener {
             onCancelPressed()
         }
@@ -184,7 +183,7 @@ class CameraOpenActivity : AppCompatActivity() {
                     val result = hashMapOf(
                         "nama" to plantName,
                         "imageUri" to imageUri.toString(),
-                        "akurasi" to detectionResult.second, // Menyimpan nilai akurasi
+                        "akurasi" to detectionResult.second,
                         "karbo" to karbo,
                         "serat" to serat,
                         "kategori" to kategori,
@@ -210,8 +209,7 @@ class CameraOpenActivity : AppCompatActivity() {
     }
 
     private fun onCancelPressed() {
-        // Fungsi untuk handle cancel action
-        finish()  // Menutup activity dan kembali ke activity sebelumnya
+        finish()
     }
 
     private fun showLoadingDialog() {

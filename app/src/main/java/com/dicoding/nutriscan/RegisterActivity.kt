@@ -80,13 +80,10 @@ class RegisterActivity : AppCompatActivity() {
                 binding.RBtnDaftar.isEnabled = true
 
                 if (task.isSuccessful) {
-                    // Mendapatkan UID pengguna yang baru didaftarkan
                     val userId = auth.currentUser?.uid
 
-                    // Membuat objek user untuk disimpan ke Firebase Realtime Database
                     val user = User(name, email, favorites = emptyMap())
 
-                    // Menyimpan data pengguna ke Firebase Database
                     if (userId != null) {
                         val userRef = database.getReference("users").child(userId)
                         userRef.setValue(user).addOnCompleteListener { databaseTask ->

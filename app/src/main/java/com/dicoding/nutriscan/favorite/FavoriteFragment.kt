@@ -24,7 +24,7 @@ class FavoriteFragment : Fragment() {
     private lateinit var adapter: FavoriteAdapter
     private lateinit var database: DatabaseReference
     private lateinit var progressBar: ProgressBar
-    private lateinit var emptyTextView: TextView  // Menambahkan referensi untuk TextView
+    private lateinit var emptyTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,8 +35,8 @@ class FavoriteFragment : Fragment() {
         recyclerView = view.findViewById(R.id.rv_favorite)
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
-        progressBar = view.findViewById(R.id.progressBar) // Menyambungkan ProgressBar dengan layout XML
-        emptyTextView = view.findViewById(R.id.c_txt1) // Menyambungkan TextView "No history yet" dengan layout XML
+        progressBar = view.findViewById(R.id.progressBar)
+        emptyTextView = view.findViewById(R.id.c_txt1)
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId != null) {
@@ -50,7 +50,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun fetchFavorites() {
-        // Menampilkan ProgressBar saat data sedang dimuat
+
         progressBar.visibility = View.VISIBLE
 
         // Mendapatkan data dari Firebase
@@ -62,22 +62,19 @@ class FavoriteFragment : Fragment() {
                     article?.let { favoritesList.add(it) }
                 }
 
-                // Cek apakah data favorit kosong
                 if (favoritesList.isEmpty()) {
-                    // Menampilkan pesan jika tidak ada data favorit
+
                     emptyTextView.visibility = View.VISIBLE
                     recyclerView.visibility = View.GONE
                 } else {
-                    // Menyembunyikan pesan "No history yet" dan menampilkan RecyclerView jika ada data
+
                     emptyTextView.visibility = View.GONE
                     recyclerView.visibility = View.VISIBLE
 
-                    // Set data ke adapter RecyclerView
                     adapter = FavoriteAdapter(favoritesList)
                     recyclerView.adapter = adapter
                 }
 
-                // Sembunyikan ProgressBar setelah data selesai dimuat
                 progressBar.visibility = View.GONE
             }
 

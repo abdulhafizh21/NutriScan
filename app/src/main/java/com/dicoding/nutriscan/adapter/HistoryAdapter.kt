@@ -34,17 +34,14 @@ class HistoryAdapter(
             binding.HistoryKarbo.text = "Karbo: ${historyItem.carbohydrates} gram"
             binding.HistorySerat.text = "Serat: ${historyItem.fiber} gram"
 
-            // Mengatur gambar dengan Glide
             Glide.with(context).load(historyItem.imageUri).into(binding.articleImage)
 
-            // Mengatur klik listener untuk detail
             itemView.setOnClickListener {
-                onItemClick(historyItem) // Memanggil lambda ketika item di klik
+                onItemClick(historyItem)
             }
 
-            // Mengatur klik listener untuk tombol hapus
             binding.hapusHistory.setOnClickListener {
-                onDeleteClick(historyItem) // Memanggil fungsi hapus saat tombol ditekan
+                onDeleteClick(historyItem)
             }
         }
     }

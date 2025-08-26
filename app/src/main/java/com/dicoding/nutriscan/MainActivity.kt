@@ -20,12 +20,10 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set default fragment to be displayed
         if (savedInstanceState == null) {
             loadFragment(HomeFragment())
         }
 
-        // Set listener for Bottom Navigation
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
